@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wlan_connector/bloc/wlan_bloc.dart';
-import 'package:wlan_connector/bloc/wlan_event.dart';
-import 'package:wlan_connector/bloc/wlan_state.dart';
-import 'package:wlan_connector/constants/validation_status.dart';
+import 'package:wlan_connector/presentation/bloc/wlan_bloc.dart';
+import 'package:wlan_connector/presentation/bloc/wlan_event.dart';
+import 'package:wlan_connector/presentation/bloc/wlan_state.dart';
+import 'package:wlan_connector/presentation/constants/validation_status.dart';
+import 'package:wlan_connector/domain/service/connection_service.dart';
 
 class EnterPasswordDialog extends StatelessWidget {
   EnterPasswordDialog({super.key});
@@ -13,7 +14,7 @@ class EnterPasswordDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => WlanBloc(),
+      create: (context) => WlanBloc(ConnectionService()),
       child: BlocConsumer<WlanBloc, WlanState>(listener: (context, state) {
         if (state.validationStatus == ValidationStatus.success) {
           _showSuccessSnackbar(context);

@@ -1,15 +1,17 @@
 import 'dart:math';
 
-import 'package:wlan_connector/constants/refresh_status.dart';
-import 'package:wlan_connector/bloc/wlan_event.dart';
-import 'package:wlan_connector/bloc/wlan_state.dart';
+import 'package:wlan_connector/presentation/constants/refresh_status.dart';
+import 'package:wlan_connector/presentation/bloc/wlan_event.dart';
+import 'package:wlan_connector/presentation/bloc/wlan_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wlan_connector/constants/connection_quality.dart';
-import 'package:wlan_connector/constants/validation_status.dart';
-import 'package:wlan_connector/model/wlan.dart';
+import 'package:wlan_connector/presentation/constants/validation_status.dart';
+import 'package:wlan_connector/domain/model/wlan.dart';
+import 'package:wlan_connector/domain/service/connection_service.dart';
 
 class WlanBloc extends Bloc<WlanEvent, WlanState> {
-  WlanBloc() : super(const WlanState()) {
+  final ConnectionService _connectionService;
+
+  WlanBloc(this._connectionService) : super(const WlanState()) {
     on<WlanEvent>(
       (event, emit) async {
         await event.when(
@@ -20,26 +22,6 @@ class WlanBloc extends Bloc<WlanEvent, WlanState> {
         );
       },
     );
-  }
-
-  List<Wlan> _getWlanConnections() {
-    List<Map<String, dynamic>> rawData = [
-      {'name': 'Workspace-WLAN', 'connectionQuality': ConnectionQuality.low, 'isLocked': true},
-      {'name': 'XYZ_WLAN', 'connectionQuality': ConnectionQuality.medium, 'isLocked': true},
-      {'name': 'FritzBox 78954320FF2B2345', 'connectionQuality': ConnectionQuality.high, 'isLocked': false},
-      {'name': 'IBelieveWiCanFi', 'connectionQuality': ConnectionQuality.high, 'isLocked': true},
-      {'name': 'Lenas WIFI', 'connectionQuality': ConnectionQuality.high, 'isLocked': false},
-      {'name': 'Lenas WIFI 2', 'connectionQuality': ConnectionQuality.low, 'isLocked': true},
-      {'name': 'The BestWIFI', 'connectionQuality': ConnectionQuality.high, 'isLocked': false},
-    ];
-
-    return rawData.map((data) {
-      return Wlan(
-        name: data['name'],
-        connectionQuality: data['connectionQuality'],
-        isLocked: data['isLocked'],
-      );
-    }).toList();
   }
 
   Future<void> _obscurePassword(Emitter<WlanState> emit, bool obscurePassword) async {
@@ -55,7 +37,8 @@ class WlanBloc extends Bloc<WlanEvent, WlanState> {
   }
 
   Future<void> _getConnections(Emitter<WlanState> emit) async {
-    emit(state.copyWith(wlanConnections: _getWlanConnections()));
+    final connections = await _connectionService.getWlanConnections();
+    emit(state.copyWith(wlanConnections: connections));
   }
 
   Future<void> _refreshConnections(Emitter<WlanState> emit) async {

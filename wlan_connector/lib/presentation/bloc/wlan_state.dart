@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:wlan_connector/constants/refresh_status.dart';
-import 'package:wlan_connector/constants/validation_status.dart';
-import 'package:wlan_connector/model/wlan.dart';
+import 'package:wlan_connector/presentation/constants/refresh_status.dart';
+import 'package:wlan_connector/presentation/constants/validation_status.dart';
+import 'package:wlan_connector/domain/model/wlan.dart';
 
 part 'wlan_state.freezed.dart';
 

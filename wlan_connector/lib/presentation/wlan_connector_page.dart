@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wlan_connector/constants/refresh_status.dart';
-import 'package:wlan_connector/bloc/wlan_bloc.dart';
-import 'package:wlan_connector/bloc/wlan_event.dart';
-import 'package:wlan_connector/bloc/wlan_state.dart';
-import 'package:wlan_connector/widgets/refresh_button.dart';
-import 'package:wlan_connector/widgets/wifi_tile.dart';
+import 'package:wlan_connector/presentation/constants/refresh_status.dart';
+import 'package:wlan_connector/presentation/bloc/wlan_bloc.dart';
+import 'package:wlan_connector/presentation/bloc/wlan_event.dart';
+import 'package:wlan_connector/presentation/bloc/wlan_state.dart';
+import 'package:wlan_connector/presentation/widgets/refresh_button.dart';
+import 'package:wlan_connector/presentation/widgets/wifi_tile.dart';
 
 class WlanConnectorPage extends StatelessWidget {
   const WlanConnectorPage({super.key});

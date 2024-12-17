@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wlan_connector/bloc/wlan_bloc.dart';
-import 'package:wlan_connector/bloc/wlan_event.dart';
-import 'package:wlan_connector/wlan_connector_page.dart';
+import 'package:wlan_connector/presentation/bloc/wlan_bloc.dart';
+import 'package:wlan_connector/presentation/bloc/wlan_event.dart';
+import 'package:wlan_connector/domain/service/connection_service.dart';
+import 'package:wlan_connector/presentation/wlan_connector_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: BlocProvider(
-        create: (context) => WlanBloc()..add(const GetConnectionsEvent()),
+        create: (context) => WlanBloc(ConnectionService())..add(const GetConnectionsEvent()),
         child: const WlanConnectorPage(),
       ),
     );

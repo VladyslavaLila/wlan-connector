@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wlan_connector/widgets/enter_password_dialog.dart';
+import 'package:wlan_connector/presentation/widgets/enter_password_dialog.dart';
 
 class WifiTile extends StatelessWidget {
   final String name;
