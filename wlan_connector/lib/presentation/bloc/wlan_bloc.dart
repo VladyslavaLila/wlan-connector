@@ -1,11 +1,11 @@
-import 'dart:math';
+import 'dart:developer';
 
+import 'package:wlan_connector/presentation/constants/get_conenctions_status.dart';
 import 'package:wlan_connector/presentation/constants/refresh_status.dart';
 import 'package:wlan_connector/presentation/bloc/wlan_event.dart';
 import 'package:wlan_connector/presentation/bloc/wlan_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wlan_connector/presentation/constants/validation_status.dart';
-import 'package:wlan_connector/domain/model/wlan.dart';
 import 'package:wlan_connector/domain/service/connection_service.dart';
 
 class WlanBloc extends Bloc<WlanEvent, WlanState> {
@@ -37,19 +37,27 @@ class WlanBloc extends Bloc<WlanEvent, WlanState> {
   }
 
   Future<void> _getConnections(Emitter<WlanState> emit) async {
-    final connections = await _connectionService.getWlanConnections();
-    emit(state.copyWith(wlanConnections: connections));
+    try {
+      emit(state.copyWith(getConnectionsStatus: GetConnectionsStatus.loading));
+      final connections = await _connectionService.getWlanConnections();
+      emit(state.copyWith(getConnectionsStatus: GetConnectionsStatus.success, wlanConnections: connections));
+    } catch (e) {
+      emit(state.copyWith(getConnectionsStatus: GetConnectionsStatus.error));
+      log("WLAN BLOC. Failed to get connectios: $e");
+    }
   }
 
   Future<void> _refreshConnections(Emitter<WlanState> emit) async {
-    emit(state.copyWith(refreshStatus: RefreshStatus.loading));
-    List<Wlan> refreshedConnections = List.from(state.wlanConnections ?? []);
-    refreshedConnections.shuffle();
-    int randomItemCount = Random().nextBool() ? 6 : 8;
-    await Future.delayed(const Duration(seconds: 1));
-    emit(state.copyWith(
-      refreshStatus: RefreshStatus.success,
-      wlanConnections: refreshedConnections.take(randomItemCount).toList(),
-    ));
+    try {
+      emit(state.copyWith(refreshStatus: RefreshStatus.loading));
+      final refreshedConnections = await _connectionService.refreshWlanConnections();
+      emit(state.copyWith(
+        refreshStatus: RefreshStatus.success,
+        wlanConnections: refreshedConnections,
+      ));
+    } catch (e) {
+      emit(state.copyWith(getConnectionsStatus: GetConnectionsStatus.error));
+      log("WLAN BLOC. Failed to refresh connectios: $e");
+    }
   }
 }

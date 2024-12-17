@@ -16,6 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$WlanState {
+  GetConnectionsStatus? get getConnectionsStatus =>
+      throw _privateConstructorUsedError;
   RefreshStatus? get refreshStatus => throw _privateConstructorUsedError;
   ValidationStatus? get validationStatus => throw _privateConstructorUsedError;
   List<Wlan>? get wlanConnections => throw _privateConstructorUsedError;
@@ -34,7 +36,8 @@ abstract class $WlanStateCopyWith<$Res> {
       _$WlanStateCopyWithImpl<$Res, WlanState>;
   @useResult
   $Res call(
-      {RefreshStatus? refreshStatus,
+      {GetConnectionsStatus? getConnectionsStatus,
+      RefreshStatus? refreshStatus,
       ValidationStatus? validationStatus,
       List<Wlan>? wlanConnections,
       bool? obscurePassword});
@@ -55,12 +58,17 @@ class _$WlanStateCopyWithImpl<$Res, $Val extends WlanState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? getConnectionsStatus = freezed,
     Object? refreshStatus = freezed,
     Object? validationStatus = freezed,
     Object? wlanConnections = freezed,
     Object? obscurePassword = freezed,
   }) {
     return _then(_value.copyWith(
+      getConnectionsStatus: freezed == getConnectionsStatus
+          ? _value.getConnectionsStatus
+          : getConnectionsStatus // ignore: cast_nullable_to_non_nullable
+              as GetConnectionsStatus?,
       refreshStatus: freezed == refreshStatus
           ? _value.refreshStatus
           : refreshStatus // ignore: cast_nullable_to_non_nullable
@@ -90,7 +98,8 @@ abstract class _$$WlanStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {RefreshStatus? refreshStatus,
+      {GetConnectionsStatus? getConnectionsStatus,
+      RefreshStatus? refreshStatus,
       ValidationStatus? validationStatus,
       List<Wlan>? wlanConnections,
       bool? obscurePassword});
@@ -109,12 +118,17 @@ class __$$WlanStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? getConnectionsStatus = freezed,
     Object? refreshStatus = freezed,
     Object? validationStatus = freezed,
     Object? wlanConnections = freezed,
     Object? obscurePassword = freezed,
   }) {
     return _then(_$WlanStateImpl(
+      getConnectionsStatus: freezed == getConnectionsStatus
+          ? _value.getConnectionsStatus
+          : getConnectionsStatus // ignore: cast_nullable_to_non_nullable
+              as GetConnectionsStatus?,
       refreshStatus: freezed == refreshStatus
           ? _value.refreshStatus
           : refreshStatus // ignore: cast_nullable_to_non_nullable
@@ -139,12 +153,15 @@ class __$$WlanStateImplCopyWithImpl<$Res>
 
 class _$WlanStateImpl implements _WlanState {
   const _$WlanStateImpl(
-      {this.refreshStatus,
+      {this.getConnectionsStatus,
+      this.refreshStatus,
       this.validationStatus,
       final List<Wlan>? wlanConnections,
       this.obscurePassword})
       : _wlanConnections = wlanConnections;
 
+  @override
+  final GetConnectionsStatus? getConnectionsStatus;
   @override
   final RefreshStatus? refreshStatus;
   @override
@@ -164,7 +181,7 @@ class _$WlanStateImpl implements _WlanState {
 
   @override
   String toString() {
-    return 'WlanState(refreshStatus: $refreshStatus, validationStatus: $validationStatus, wlanConnections: $wlanConnections, obscurePassword: $obscurePassword)';
+    return 'WlanState(getConnectionsStatus: $getConnectionsStatus, refreshStatus: $refreshStatus, validationStatus: $validationStatus, wlanConnections: $wlanConnections, obscurePassword: $obscurePassword)';
   }
 
   @override
@@ -172,6 +189,8 @@ class _$WlanStateImpl implements _WlanState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$WlanStateImpl &&
+            (identical(other.getConnectionsStatus, getConnectionsStatus) ||
+                other.getConnectionsStatus == getConnectionsStatus) &&
             (identical(other.refreshStatus, refreshStatus) ||
                 other.refreshStatus == refreshStatus) &&
             (identical(other.validationStatus, validationStatus) ||
@@ -183,8 +202,13 @@ class _$WlanStateImpl implements _WlanState {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, refreshStatus, validationStatus,
-      const DeepCollectionEquality().hash(_wlanConnections), obscurePassword);
+  int get hashCode => Object.hash(
+      runtimeType,
+      getConnectionsStatus,
+      refreshStatus,
+      validationStatus,
+      const DeepCollectionEquality().hash(_wlanConnections),
+      obscurePassword);
 
   /// Create a copy of WlanState
   /// with the given fields replaced by the non-null parameter values.
@@ -197,11 +221,14 @@ class _$WlanStateImpl implements _WlanState {
 
 abstract class _WlanState implements WlanState {
   const factory _WlanState(
-      {final RefreshStatus? refreshStatus,
+      {final GetConnectionsStatus? getConnectionsStatus,
+      final RefreshStatus? refreshStatus,
       final ValidationStatus? validationStatus,
       final List<Wlan>? wlanConnections,
       final bool? obscurePassword}) = _$WlanStateImpl;
 
+  @override
+  GetConnectionsStatus? get getConnectionsStatus;
   @override
   RefreshStatus? get refreshStatus;
   @override
