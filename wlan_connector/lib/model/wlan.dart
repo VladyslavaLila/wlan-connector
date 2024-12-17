@@ -1,4 +1,4 @@
-import 'package:wlan_connector/model/connection_quality.dart';
+import 'package:wlan_connector/constants/connection_quality.dart';
 
 class Wlan {
   Wlan({required this.name, required this.connectionQuality, required this.isLocked});
